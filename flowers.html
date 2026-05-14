@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flowers — Blomster på Amagerbrogade, København S</title>
+  <meta name="description" content="Flowers er din lokale blomsterbutik på Amagerbrogade, 2300 København S. Friske håndtbundne buketter, begravelsesbinderi og eventdekorationer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────
+       Reset & base
+    ───────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white:  #ffffff;
+      --beige:  #f5f0eb;
+      --rose:   #c9a99a;
+      --sage:   #8a9e85;
+      --dark:   #2a2a2a;
+      --mid:    #5a5a5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    /* ─────────────────────────────────────────
+       Shared utilities
+    ───────────────────────────────────────── */
+    .section-label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.2rem;
+    }
+
+    /* Scroll-triggered fade-in */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity  0.9s cubic-bezier(.25,.46,.45,.94),
+        transform 0.9s cubic-bezier(.25,.46,.45,.94);
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─────────────────────────────────────────
+       1. NAVBAR
+    ───────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    #navbar.scrolled {
+      background: var(--white);
+      box-shadow: 0 1px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    /* Logo */
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.4s ease;
+      z-index: 1;
+    }
+    #navbar.scrolled .nav-logo { color: var(--dark); }
+
+    /* Desktop nav links */
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2.8rem;
+    }
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.4s ease, opacity 0.3s ease;
+    }
+    #navbar.scrolled .nav-links a { color: var(--dark); }
+    .nav-links a:hover { opacity: 0.5; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+      z-index: 1;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--white);
+      transition: transform 0.3s ease, opacity 0.3s ease, background 0.4s ease;
+    }
+    #navbar.scrolled .hamburger span { background: var(--dark); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile fullscreen overlay */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--white);
+      z-index: 800;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.2rem;
+    }
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease;
+    }
+    #mobile-menu a:hover { color: var(--rose); }
+
+    /* ─────────────────────────────────────────
+       2. HERO
+    ───────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        url('hero.jpeg')
+        center / cover no-repeat;
+      transform: scale(1.07);
+      transition: transform 10s ease;
+    }
+    #hero.loaded .hero-bg { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: var(--white);
+      padding: 0 2rem;
+    }
+    .hero-content h1 {
+      font-size: clamp(4.5rem, 11vw, 9.5rem);
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+    .hero-location {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-content h2 {
+      font-size: clamp(1rem, 2.2vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      opacity: 0.93;
+      margin-bottom: 2.8rem;
+    }
+
+    .btn-hero {
+      display: inline-block;
+      padding: 0.9rem 2.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-hero:hover {
+      background: var(--white);
+      color: var(--dark);
+      border-color: var(--white);
+    }
+
+    /* ─────────────────────────────────────────
+       3. USP STRIP
+    ───────────────────────────────────────── */
+    #usp {
+      background: var(--beige);
+      padding: 5.5rem 4rem;
+    }
+    .usp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .usp-item { text-align: center; }
+    .usp-icon {
+      font-size: 1.7rem;
+      display: block;
+      margin-bottom: 1.1rem;
+    }
+    .usp-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .usp-item p {
+      font-size: 0.8rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* ─────────────────────────────────────────
+       4. OM OS
+    ───────────────────────────────────────── */
+    #om-os { padding: 9rem 4rem; }
+
+    .om-os-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      max-width: 1140px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .om-os-text h2 {
+      font-size: clamp(2rem, 3.8vw, 3.1rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.7rem;
+    }
+    .om-os-text p {
+      font-size: 0.875rem;
+      color: var(--mid);
+      line-height: 1.88;
+      margin-bottom: 1.1rem;
+    }
+    .om-os-text p:last-child { margin-bottom: 0; }
+
+    .placeholder-text {
+      font-style: italic;
+      color: rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .om-os-image img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+    }
+
+    /* ─────────────────────────────────────────
+       5. YDELSER
+    ───────────────────────────────────────── */
+    #ydelser {
+      background: var(--beige);
+      padding: 9rem 4rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4.5rem;
+    }
+    .section-header h2 {
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      font-weight: 300;
+    }
+
+    .ydelser-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .ydelse-card {
+      background: var(--white);
+      padding: 2.8rem 2.3rem;
+      border: 1px solid rgba(201, 169, 154, 0.3);
+      transition:
+        border-color 0.35s ease,
+        transform    0.35s ease,
+        box-shadow   0.35s ease;
+    }
+    .ydelse-card:hover {
+      border-color: var(--rose);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.07);
+    }
+    .ydelse-accent {
+      width: 28px;
+      height: 1px;
+      background: var(--rose);
+      margin-bottom: 1.4rem;
+    }
+    .ydelse-card h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.9rem;
+    }
+    .ydelse-card p {
+      font-size: 0.83rem;
+      color: var(--mid);
+      line-height: 1.78;
+    }
+
+    /* ─────────────────────────────────────────
+       6 + 7. ÅBNINGSTIDER & KONTAKT (merged)
+    ───────────────────────────────────────── */
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .hours-table tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td {
+      padding: 1.1rem 0;
+      font-size: 0.875rem;
+      color: var(--mid);
+    }
+    .hours-table td:first-child {
+      text-align: left;
+      color: var(--dark);
+      font-weight: 500;
+    }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table .closed { color: var(--rose); }
+
+    #kontakt {
+      background: var(--beige);
+      padding: 9rem 4rem;
+    }
+
+    .kontakt-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 1140px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .kontakt-hours {
+      padding-right: 5rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .kontakt-info {
+      padding-left: 5rem;
+    }
+
+    .kontakt-hours h2,
+    .kontakt-info h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 300;
+      margin-bottom: 2.2rem;
+    }
+
+    .kontakt-detail { margin-bottom: 1.7rem; }
+    .kontakt-detail .detail-label {
+      display: block;
+      font-size: 0.63rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.35rem;
+    }
+    .kontakt-detail p,
+    .kontakt-detail a {
+      font-size: 0.9rem;
+      color: var(--dark);
+      text-decoration: none;
+      line-height: 1.65;
+    }
+    .kontakt-detail a:hover { color: var(--rose); }
+
+    .map-wrapper { margin-top: 2rem; }
+    .map-wrapper iframe {
+      width: 100%;
+      height: 320px;
+      border: none;
+      display: block;
+      filter: grayscale(18%) contrast(1.03);
+    }
+
+    /* ─────────────────────────────────────────
+       8. FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 2.2rem 4rem;
+      text-align: center;
+    }
+    footer p {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.42);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─────────────────────────────────────────
+       Responsive — 768px
+    ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #navbar { padding: 0 1.8rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      #usp { padding: 4rem 1.8rem; }
+
+      #om-os { padding: 6rem 1.8rem; }
+      .om-os-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .om-os-image { order: -1; }
+      .om-os-image img { height: 340px; }
+
+      #ydelser { padding: 6rem 1.8rem; }
+      .ydelser-grid { grid-template-columns: 1fr; }
+
+      #kontakt { padding: 6rem 1.8rem; }
+      .kontakt-inner { grid-template-columns: 1fr; }
+      .kontakt-hours {
+        padding-right: 0;
+        padding-bottom: 3rem;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .kontakt-info {
+        padding-left: 0;
+        padding-top: 3rem;
+      }
+      .map-wrapper iframe { height: 260px; }
+
+      footer { padding: 2rem 1.8rem; }
+    }
+
+    /* ─────────────────────────────────────────
+       Responsive — 560px
+    ───────────────────────────────────────── */
+    @media (max-width: 560px) {
+      .usp-grid { grid-template-columns: 1fr; }
+      .hero-content h1 { letter-spacing: 0.18em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <nav id="navbar" role="navigation" aria-label="Primær navigation">
+    <a href="#hero" class="nav-logo" aria-label="Flowers — gå til toppen">Flowers</a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#om-os">Om os</a></li>
+      <li><a href="#ydelser">Ydelser</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+
+    <button
+      class="hamburger"
+      id="hamburger"
+      aria-label="Åbn menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile fullscreen menu -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <a href="#om-os"   class="m-link">Om os</a>
+    <a href="#ydelser" class="m-link">Ydelser</a>
+    <a href="#kontakt" class="m-link">Kontakt</a>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section id="hero" aria-label="Velkomst">
+    <div class="hero-bg" role="img" aria-label="Friske blomster i varmt lys"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1>Flowers</h1>
+      <p class="hero-location">Amagerbrogade &nbsp;·&nbsp; København S</p>
+      <h2>Blomster til livets øjeblikke</h2>
+      <a href="#kontakt" class="btn-hero">Find os</a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       USP STRIP
+  ══════════════════════════════════════ -->
+  <section id="usp" aria-label="Hvad vi tilbyder">
+    <div class="usp-grid">
+      <div class="usp-item fade-in">
+        <span class="usp-icon" aria-hidden="true">🌿</span>
+        <h3>Friske blomster dagligt</h3>
+        <p>Vi modtager friske blomster hver morgen, så du altid får den bedste kvalitet.</p>
+      </div>
+      <div class="usp-item fade-in">
+        <span class="usp-icon" aria-hidden="true">💐</span>
+        <h3>Buketter til enhver anledning</h3>
+        <p>Fra hverdagens lille glæde til livets store øjeblikke — vi binder det rette.</p>
+      </div>
+      <div class="usp-item fade-in">
+        <span class="usp-icon" aria-hidden="true">📍</span>
+        <h3>Find os på Amagerbrogade</h3>
+        <p>Hjerte på Amager — kom forbi og lad sæsonens blomster inspirere dig.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       OM OS
+  ══════════════════════════════════════ -->
+  <section id="om-os" aria-labelledby="om-os-h">
+    <div class="om-os-grid">
+      <div class="om-os-text fade-in">
+        <span class="section-label">Om os</span>
+        <h2 id="om-os-h">Et lille blomsterhus med stor kærlighed til blomster</h2>
+        <p class="placeholder-text">[ Her indsættes en kort tekst om butikken, jeres historie og hvad der gør jer særlige. ]</p>
+      </div>
+      <div class="om-os-image fade-in">
+        <img
+          src="placeholder.jpeg"
+          alt="Interiøret i Flowers blomsterbutik på Amagerbrogade"
+          loading="lazy"
+          width="800"
+          height="580"
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       YDELSER
+  ══════════════════════════════════════ -->
+  <section id="ydelser" aria-labelledby="ydelser-h">
+    <div class="section-header fade-in">
+      <span class="section-label">Hvad vi tilbyder</span>
+      <h2 id="ydelser-h">Ydelser</h2>
+    </div>
+    <div class="ydelser-grid">
+      <article class="ydelse-card fade-in">
+        <div class="ydelse-accent" aria-hidden="true"></div>
+        <h3>Buketter</h3>
+        <p>Friske, håndtbundne buketter til enhver anledning — fødselsdag, jubilæum, kærlighed eller bare fordi. Vi binder efter dine ønsker eller lader sæsonen tale.</p>
+      </article>
+      <article class="ydelse-card fade-in">
+        <div class="ydelse-accent" aria-hidden="true"></div>
+        <h3>Begravelsesbinderi</h3>
+        <p>I svære stunder hjælper vi dig med at finde de rigtige blomster. Vi binder med omtanke og respekt — kranse, kistetæpper og sørgebuketter, der ærer det liv der er levet.</p>
+      </article>
+      <article class="ydelse-card fade-in">
+        <div class="ydelse-accent" aria-hidden="true"></div>
+        <h3>Events &amp; dekorationer</h3>
+        <p>Fra intime middage til store selskaber — vi dekorerer med blomster, der sætter stemningen. Bryllupper, fødselsdage, konferencer og alt derimellem.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       ÅBNINGSTIDER & KONTAKT (merged)
+  ══════════════════════════════════════ -->
+  <section id="kontakt" aria-labelledby="kontakt-h">
+    <div class="kontakt-inner">
+
+      <!-- Left: opening hours -->
+      <div class="kontakt-hours fade-in">
+        <span class="section-label">Åbningstider</span>
+        <h2>Når du finder os</h2>
+        <table class="hours-table" aria-label="Butikkens åbningstider">
+          <tbody>
+            <tr>
+              <td>Mandag – Fredag</td>
+              <td>09:00 – 18:00</td>
+            </tr>
+            <tr>
+              <td>Lørdag</td>
+              <td>09:00 – 15:00</td>
+            </tr>
+            <tr>
+              <td>Søndag</td>
+              <td class="closed">Lukket</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right: contact info + map -->
+      <div class="kontakt-info fade-in">
+        <span class="section-label">Kontakt</span>
+        <h2 id="kontakt-h">Vi glæder os til at møde dig</h2>
+
+        <div class="kontakt-detail">
+          <span class="detail-label">Adresse</span>
+          <p>Amagerbrogade<br>2300 København S</p>
+        </div>
+        <div class="kontakt-detail">
+          <span class="detail-label">Telefon</span>
+          <a href="tel:+4500000000">+45 XX XX XX XX</a>
+        </div>
+        <div class="kontakt-detail">
+          <span class="detail-label">E-mail</span>
+          <a href="mailto:info@flowers-amager.dk">info@flowers-amager.dk</a>
+        </div>
+
+        <div class="map-wrapper">
+          <iframe
+            src="https://maps.google.com/maps?q=55.6616414,12.6037899&z=16&output=embed"
+            title="Flowers på Amagerbrogade — Google Maps"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer>
+    <p>© 2025 Flowers &nbsp;·&nbsp; Amagerbrogade &nbsp;·&nbsp; København S</p>
+  </footer>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    /* ── 1. Navbar: transparent → white on scroll ── */
+    const navbar = document.getElementById('navbar');
+
+    function updateNavbar() {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    updateNavbar();
+
+    /* ── 2. Hero Ken Burns zoom on load ── */
+    window.addEventListener('load', () => {
+      document.getElementById('hero').classList.add('loaded');
+    });
+
+    /* ── 3. Hamburger / mobile menu ── */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function closeMobile() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const opening = !mobileMenu.classList.contains('open');
+      if (opening) {
+        hamburger.classList.add('open');
+        mobileMenu.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      } else {
+        closeMobile();
+      }
+    });
+
+    document.querySelectorAll('.m-link').forEach(a => {
+      a.addEventListener('click', closeMobile);
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeMobile();
+    });
+
+    /* ── 4. Intersection Observer: fade-in on scroll ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ── 5. Stagger delays for grouped items ── */
+    document.querySelectorAll('.usp-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.14}s`;
+    });
+    document.querySelectorAll('.ydelse-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.12}s`;
+    });
+
+    /* ── 6. Contact form → mailto ── */
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const message = document.getElementById('cf-msg').value.trim();
+
+      if (!name || !email || !message) {
+        alert('Udfyld venligst alle felter.');
+        return;
+      }
+
+      const subject = encodeURIComponent('Besked fra ' + name);
+      const body    = encodeURIComponent(
+        'Navn: ' + name + '\n' +
+        'E-mail: ' + email + '\n\n' +
+        message
+      );
+
+      window.location.href =
+        'mailto:XXX@gmail.com?subject=' + subject + '&body=' + body;
+    });
+  </script>
+</body>
+</html>
