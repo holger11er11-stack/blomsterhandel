@@ -477,27 +477,70 @@
     }
 
     /* ─────────────────────────────────────────
-       Responsive — 768px
+       Responsive — 768px (mobile)
     ───────────────────────────────────────── */
     @media (max-width: 768px) {
-      #navbar { padding: 0 1.8rem; }
+
+      /* prevent any element from causing horizontal scroll */
+      body { overflow-x: hidden; }
+      * { max-width: 100%; }
+
+      /* ── 1. Navbar ── */
+      #navbar { padding: 0 1.5rem; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
 
-      #usp { padding: 4rem 1.8rem; }
+      /* ── 2. Hero ── */
+      .hero-content {
+        padding: 0 1.5rem;
+        width: 100%;
+      }
+      .hero-content h1 {
+        font-size: 3rem;        /* ~48px max as requested */
+        letter-spacing: 0.1em; /* tight spacing prevents overflow */
+        margin-bottom: 0.5rem;
+      }
+      .hero-location {
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        margin-bottom: 1.2rem;
+      }
+      .hero-content h2 {
+        font-size: 1.05rem;    /* well under 24px */
+        margin-bottom: 2rem;
+      }
+      .btn-hero {
+        display: block;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        text-align: center;
+        box-sizing: border-box;
+      }
 
-      #om-os { padding: 6rem 1.8rem; }
+      /* ── 3. USP strip ── */
+      #usp { padding: 3.5rem 1.5rem; }
+      .usp-grid {
+        grid-template-columns: 1fr;
+        gap: 2.2rem;
+      }
+
+      /* ── 4. Om os ── */
+      #om-os { padding: 5rem 1.5rem; }
       .om-os-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
       }
       .om-os-image { order: -1; }
-      .om-os-image img { height: 340px; }
+      .om-os-image img { height: 260px; }
 
-      #ydelser { padding: 6rem 1.8rem; }
+      /* ── 5. Ydelser ── */
+      #ydelser { padding: 5rem 1.5rem; }
       .ydelser-grid { grid-template-columns: 1fr; }
+      .section-header { margin-bottom: 2.5rem; }
 
-      #kontakt { padding: 6rem 1.8rem; }
+      /* ── 6. Åbningstider & Kontakt ── */
+      #kontakt { padding: 5rem 1.5rem; }
       .kontakt-inner { grid-template-columns: 1fr; }
       .kontakt-hours {
         padding-right: 0;
@@ -509,17 +552,17 @@
         padding-left: 0;
         padding-top: 3rem;
       }
-      .map-wrapper iframe { height: 260px; }
+      .map-wrapper {
+        margin-top: 1.5rem;
+        width: 100%;
+      }
+      .map-wrapper iframe {
+        height: 240px;
+        width: 100%;
+      }
 
-      footer { padding: 2rem 1.8rem; }
-    }
-
-    /* ─────────────────────────────────────────
-       Responsive — 560px
-    ───────────────────────────────────────── */
-    @media (max-width: 560px) {
-      .usp-grid { grid-template-columns: 1fr; }
-      .hero-content h1 { letter-spacing: 0.18em; }
+      /* ── Footer ── */
+      footer { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
