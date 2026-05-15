@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flowers — Blomster på Amagerbrogade, København S</title>
-  <meta name="description" content="Flowers er din lokale blomsterbutik på Amagerbrogade, 2300 København S. Friske håndtbundne buketter, begravelsesbinderi og eventdekorationer.">
+  <title>Anemone De Caen — Blomsterbutik på Strandlodsvej, Amager Øst</title>
+  <meta name="description" content="Anemone De Caen er din lokale blomsterbutik på Strandlodsvej 48, 2300 København S. Friske håndtbundne buketter, begravelsesbinderi og eventdekorationer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -22,8 +22,8 @@
     :root {
       --white:  #ffffff;
       --beige:  #f5f0eb;
-      --rose:   #c9a99a;
-      --sage:   #8a9e85;
+      --rose:   #e8aaba;
+      --sage:   #c08898;
       --dark:   #2a2a2a;
       --mid:    #5a5a5a;
     }
@@ -572,7 +572,7 @@
        NAVBAR
   ══════════════════════════════════════ -->
   <nav id="navbar" role="navigation" aria-label="Primær navigation">
-    <a href="#hero" class="nav-logo" aria-label="Flowers — gå til toppen">Flowers</a>
+    <a href="#hero" class="nav-logo" aria-label="Anemone De Caen — gå til toppen">Anemone De Caen</a>
 
     <ul class="nav-links" role="list">
       <li><a href="#om-os">Om os</a></li>
@@ -607,8 +607,8 @@
     <div class="hero-bg" role="img" aria-label="Friske blomster i varmt lys"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <h1>Flowers</h1>
-      <p class="hero-location">Amagerbrogade &nbsp;·&nbsp; København S</p>
+      <h1>Anemone De Caen</h1>
+      <p class="hero-location">Strandlodsvej 48 &nbsp;·&nbsp; Amager Øst</p>
       <h2>Blomster til livets øjeblikke</h2>
       <a href="#kontakt" class="btn-hero">Find os</a>
     </div>
@@ -631,7 +631,7 @@
       </div>
       <div class="usp-item fade-in">
         <span class="usp-icon" aria-hidden="true">📍</span>
-        <h3>Find os på Amagerbrogade</h3>
+        <h3>Find os på Strandlodsvej</h3>
         <p>Hjerte på Amager — kom forbi og lad sæsonens blomster inspirere dig.</p>
       </div>
     </div>
@@ -650,7 +650,7 @@
       <div class="om-os-image fade-in">
         <img
           src="placeholder.jpeg"
-          alt="Interiøret i Flowers blomsterbutik på Amagerbrogade"
+          alt="Interiøret i Anemone De Caen blomsterbutik på Strandlodsvej"
           loading="lazy"
           width="800"
           height="580"
@@ -699,16 +699,12 @@
         <table class="hours-table" aria-label="Butikkens åbningstider">
           <tbody>
             <tr>
-              <td>Mandag – Fredag</td>
-              <td>09:00 – 18:00</td>
-            </tr>
-            <tr>
-              <td>Lørdag</td>
-              <td>09:00 – 15:00</td>
+              <td>Mandag – Lørdag</td>
+              <td>10:00 – 18:00</td>
             </tr>
             <tr>
               <td>Søndag</td>
-              <td class="closed">Lukket</td>
+              <td>10:00 – 16:00</td>
             </tr>
           </tbody>
         </table>
@@ -721,21 +717,21 @@
 
         <div class="kontakt-detail">
           <span class="detail-label">Adresse</span>
-          <p>Amagerbrogade<br>2300 København S</p>
+          <p>Strandlodsvej 48<br>2300 København S</p>
         </div>
         <div class="kontakt-detail">
           <span class="detail-label">Telefon</span>
-          <a href="tel:+4500000000">+45 XX XX XX XX</a>
+          <a href="tel:+4521171715">+45 21 17 17 15</a>
         </div>
         <div class="kontakt-detail">
           <span class="detail-label">E-mail</span>
-          <a href="mailto:info@flowers-amager.dk">info@flowers-amager.dk</a>
+          <a href="mailto:info@anemone-decaen.dk">info@anemone-decaen.dk</a>
         </div>
 
         <div class="map-wrapper">
           <iframe
-            src="https://maps.google.com/maps?q=55.6616414,12.6037899&z=16&output=embed"
-            title="Flowers på Amagerbrogade — Google Maps"
+            src="https://maps.google.com/maps?q=Strandlodsvej+48%2C+2300+K%C3%B8benhavn&z=16&output=embed"
+            title="Anemone De Caen på Strandlodsvej — Google Maps"
             allowfullscreen
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -750,7 +746,7 @@
        FOOTER
   ══════════════════════════════════════ -->
   <footer>
-    <p>© 2025 Flowers &nbsp;·&nbsp; Amagerbrogade &nbsp;·&nbsp; København S</p>
+    <p>© 2025 Anemone De Caen &nbsp;·&nbsp; Strandlodsvej 48 &nbsp;·&nbsp; Amager Øst</p>
   </footer>
 
   <!-- ══════════════════════════════════════
@@ -822,29 +818,6 @@
       el.style.transitionDelay = `${i * 0.12}s`;
     });
 
-    /* ── 6. Contact form → mailto ── */
-    document.getElementById('contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const name    = document.getElementById('cf-name').value.trim();
-      const email   = document.getElementById('cf-email').value.trim();
-      const message = document.getElementById('cf-msg').value.trim();
-
-      if (!name || !email || !message) {
-        alert('Udfyld venligst alle felter.');
-        return;
-      }
-
-      const subject = encodeURIComponent('Besked fra ' + name);
-      const body    = encodeURIComponent(
-        'Navn: ' + name + '\n' +
-        'E-mail: ' + email + '\n\n' +
-        message
-      );
-
-      window.location.href =
-        'mailto:XXX@gmail.com?subject=' + subject + '&body=' + body;
-    });
   </script>
 </body>
 </html>
