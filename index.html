@@ -382,7 +382,100 @@
     }
 
     /* ─────────────────────────────────────────
-       6 + 7. ÅBNINGSTIDER & KONTAKT (merged)
+       6. BESTILLINGSFORMULAR
+    ───────────────────────────────────────── */
+    #bestil {
+      background: var(--white);
+      padding: 9rem 4rem;
+    }
+
+    .bestil-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .bestil-inner .section-header {
+      text-align: left;
+      margin-bottom: 3rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem 2rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-field label {
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: var(--dark);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+      padding: 0.6rem 0;
+      outline: none;
+      transition: border-color 0.25s ease;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a5a5a'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.2rem center;
+      padding-right: 1.4rem;
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.65;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-bottom-color: var(--rose);
+    }
+
+    .btn-send {
+      margin-top: 2.4rem;
+      display: inline-block;
+      padding: 0.95rem 3rem;
+      background: var(--dark);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .btn-send:hover { background: var(--rose); }
+
+    /* ─────────────────────────────────────────
+       7 + 8. ÅBNINGSTIDER & KONTAKT (merged)
     ───────────────────────────────────────── */
     .hours-table {
       width: 100%;
@@ -539,7 +632,11 @@
       .ydelser-grid { grid-template-columns: 1fr; }
       .section-header { margin-bottom: 2.5rem; }
 
-      /* ── 6. Åbningstider & Kontakt ── */
+      /* ── 6. Bestillingsformular ── */
+      #bestil { padding: 5rem 1.5rem; }
+      .form-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+
+      /* ── 7. Åbningstider & Kontakt ── */
       #kontakt { padding: 5rem 1.5rem; }
       .kontakt-inner { grid-template-columns: 1fr; }
       .kontakt-hours {
@@ -577,6 +674,7 @@
     <ul class="nav-links" role="list">
       <li><a href="#om-os">Om os</a></li>
       <li><a href="#ydelser">Ydelser</a></li>
+      <li><a href="#bestil">Bestil</a></li>
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
 
@@ -597,6 +695,7 @@
   <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
     <a href="#om-os"   class="m-link">Om os</a>
     <a href="#ydelser" class="m-link">Ydelser</a>
+    <a href="#bestil"  class="m-link">Bestil</a>
     <a href="#kontakt" class="m-link">Kontakt</a>
   </div>
 
@@ -683,6 +782,58 @@
         <h3>Events &amp; dekorationer</h3>
         <p>Fra intime middage til store selskaber — vi dekorerer med blomster, der sætter stemningen. Bryllupper, fødselsdage, konferencer og alt derimellem.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       BESTILLINGSFORMULAR
+  ══════════════════════════════════════ -->
+  <section id="bestil" aria-labelledby="bestil-h">
+    <div class="bestil-inner fade-in">
+      <div class="section-header">
+        <span class="section-label">Skriv til os</span>
+        <h2 id="bestil-h">Send en forespørgsel</h2>
+      </div>
+
+      <form name="contact" method="POST" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="contact">
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="f-navn">Navn</label>
+            <input type="text" id="f-navn" name="navn" required autocomplete="name">
+          </div>
+
+          <div class="form-field">
+            <label for="f-telefon">Telefon</label>
+            <input type="text" id="f-telefon" name="telefon" autocomplete="tel">
+          </div>
+
+          <div class="form-field">
+            <label for="f-email">E-mail</label>
+            <input type="email" id="f-email" name="email" required autocomplete="email">
+          </div>
+
+          <div class="form-field">
+            <label for="f-anledning">Anledning</label>
+            <select id="f-anledning" name="anledning">
+              <option value="">Vælg anledning</option>
+              <option value="Fødselsdag">Fødselsdag</option>
+              <option value="Bryllup">Bryllup</option>
+              <option value="Begravelse">Begravelse</option>
+              <option value="Virksomhed">Virksomhed</option>
+              <option value="Andet">Andet</option>
+            </select>
+          </div>
+
+          <div class="form-field full">
+            <label for="f-besked">Besked / ønsker</label>
+            <textarea id="f-besked" name="besked" placeholder="Fortæl os om dine ønsker — blomstertype, farver, budget eller levering."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-send">Send forespørgsel</button>
+      </form>
     </div>
   </section>
 
